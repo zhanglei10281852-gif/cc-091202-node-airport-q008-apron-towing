@@ -1,20 +1,31 @@
-import { createServer } from "node:http";
+import { fileURLToPath } from "node:url";
+import { buildServer } from "./api.js";
+import { createEngine } from "./index.js";
 
-export function buildServer() {
-  return createServer((request, response) => {
-    if (request.method === "GET" && request.url === "/health") {
-      response.writeHead(200, { "content-type": "application/json; charset=utf-8" });
-      response.end(JSON.stringify({ status: "ok" }));
-      return;
-    }
+let sweepTimer = null;
 
-    response.writeHead(404, { "content-type": "application/json; charset=utf-8" });
-    response.end(JSON.stringify({ error: "not_found" }));
+export async function main() {
+  const eventLogPath = process.env.EVENT_LOG
+    ?? fileURLToPath(new URL("../data/events.jsonl", import.meta.url));
+  const engine = await createEngine({ eventLogPath });
+  const server = buildServer(engine);
+  const port = Number.parseInt(process.env.PORT ?? "3000", 10);
+  await new Promise((resolve) => server.listen(port, "0.0.0.0", resolve));
+
+  // 每 15 秒扫描一次超时未激活的许可并自动释放。
+  sweepTimer = setInterval(() => {
+    engine.sweepExpired().catch((error) => console.error("sweep failed:", error));
+  }, 15_000);
+  sweepTimer.unref();
+
+  return { server, engine };
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  main().then(() => {
+    console.log(`towing permit engine listening on port ${process.env.PORT ?? 3000}`);
+  }).catch((error) => {
+    console.error(error);
+    process.exit(1);
   });
 }
-
-if (process.argv[1] === new URL(import.meta.url).pathname) {
-  const port = Number.parseInt(process.env.PORT ?? "3000", 10);
-  buildServer().listen(port, "0.0.0.0");
-}
-

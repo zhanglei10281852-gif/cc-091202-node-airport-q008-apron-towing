@@ -1,0 +1,60 @@
+{
+  "scenario": "2026-09-12 夜间集中拖机申请样例（四班）",
+  "timezone": "Asia/Shanghai",
+  "requests": [
+    {
+      "requestId": "tow-101",
+      "aircraft": { "id": "B-8801", "type": "A320", "wingspan": "C" },
+      "crew": ["P-001", "P-002"],
+      "vehicle": "TUG-01",
+      "from": "S12",
+      "to": "H21",
+      "desiredAt": "2026-09-12T02:10:00+08:00",
+      "window": { "start": "2026-09-12T02:10:00+08:00", "seconds": 2400 },
+      "intersectionSeparationSeconds": 60,
+      "activateGraceSeconds": 600,
+      "legSeconds": { "S12->J4": 90, "J4->H21": 130 },
+      "notes": "基线班次：南段直插 J4 进机库，夜间窄口"
+    },
+    {
+      "requestId": "tow-102",
+      "aircraft": { "id": "B-6622", "type": "A320", "wingspan": "C" },
+      "crew": ["P-001", "P-002"],
+      "vehicle": "TUG-02",
+      "from": "N8",
+      "to": "H21",
+      "desiredAt": "2026-09-12T02:12:00+08:00",
+      "window": { "start": "2026-09-12T02:12:00+08:00", "seconds": 2400 },
+      "intersectionSeparationSeconds": 60,
+      "activateGraceSeconds": 600,
+      "legSeconds": { "N8->J4": 75, "J4->H21": 125 },
+      "notes": "与 tow-101 在 J4 相遇的第二班，期望仅晚 2 分钟，需在机位延后发车"
+    },
+    {
+      "requestId": "tow-201",
+      "aircraft": { "id": "B-5916", "type": "A330", "wingspan": "E" },
+      "crew": ["P-003", "P-004"],
+      "vehicle": "TUG-07",
+      "from": "S13",
+      "to": "H21",
+      "desiredAt": "2026-09-12T02:30:00+08:00",
+      "window": { "start": "2026-09-12T02:30:00+08:00", "seconds": 3600 },
+      "intersectionSeparationSeconds": 90,
+      "activateGraceSeconds": 900,
+      "notes": "宽体机：S13->J1 仅允许 C 类，必须走 S13->J3->J4；TW-A(J2->J4) 限 D 类"
+    },
+    {
+      "requestId": "tow-404",
+      "aircraft": { "id": "B-3049", "type": "A321", "wingspan": "C" },
+      "crew": ["P-009", "P-002"],
+      "vehicle": "TUG-09",
+      "from": "S12",
+      "to": "D1",
+      "desiredAt": "2026-09-12T03:10:00+08:00",
+      "window": { "start": "2026-09-12T03:10:00+08:00", "seconds": 1800 },
+      "intersectionSeparationSeconds": 60,
+      "activateGraceSeconds": 300,
+      "notes": "反面样例：驾驶员上岗证已过期、牵引车故障未放行；路线可批但激活必须拒绝"
+    }
+  ]
+}

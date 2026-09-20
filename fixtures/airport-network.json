@@ -1,0 +1,46 @@
+{
+  "id": "XIY-night-apron",
+  "scenario": "夜间集中拖机机坪路网（示意）",
+  "name": "夜间集中拖机机坪路网（示意）",
+  "timezone": "Asia/Shanghai",
+  "handoffNodes": ["HP-SOUTH", "HP-NORTH", "D1", "H21"],
+  "zones": [
+    { "id": "J2", "separationSeconds": 60, "note": "中央交汇，南北汇入" },
+    { "id": "J4", "separationSeconds": 60, "note": "东向窄口前共享交叉区" }
+  ],
+  "holdingPoints": [
+    { "node": "HP-SOUTH", "safeHold": true, "capacity": 2, "note": "南段等待/交接点，可避让东向车流" },
+    { "node": "HP-NORTH", "safeHold": true, "capacity": 2, "note": "北段等待/交接点" }
+  ],
+  "edges": [
+    { "id": "S11->J1", "from": "S11", "to": "J1", "seconds": 90, "aircraftTypes": ["A320", "A321", "B737", "B738"] },
+    { "id": "S12->J1", "from": "S12", "to": "J1", "seconds": 90, "aircraftTypes": ["A320", "A321", "B737", "B738"] },
+    { "id": "S13->J1", "from": "S13", "to": "J1", "seconds": 150, "maxWingspan": "C", "note": "南段窄岔，C 类以上禁行" },
+    { "id": "S13->J3", "from": "S13", "to": "J3", "seconds": 260, "maxWingspan": "F", "note": "宽体机绕行线" },
+    { "id": "J1->HP-SOUTH", "from": "J1", "to": "HP-SOUTH", "seconds": 60 },
+    { "id": "HP-SOUTH->J1", "from": "HP-SOUTH", "to": "J1", "seconds": 60, "note": "南段联络道回程" },
+    { "id": "HP-SOUTH->J2", "from": "HP-SOUTH", "to": "J2", "seconds": 100, "zone": "J2" },
+    { "id": "J2->HP-SOUTH", "from": "J2", "to": "HP-SOUTH", "seconds": 100 },
+    { "id": "J1->J3", "from": "J1", "to": "J3", "seconds": 200, "maxWingspan": "F", "note": "东北联络道" },
+
+    { "id": "N7->J3", "from": "N7", "to": "J3", "seconds": 90 },
+    { "id": "N8->J3", "from": "N8", "to": "J3", "seconds": 100 },
+    { "id": "J3->HP-NORTH", "from": "J3", "to": "HP-NORTH", "seconds": 60 },
+    { "id": "HP-NORTH->J3", "from": "HP-NORTH", "to": "J3", "seconds": 60, "note": "北段联络道回程" },
+    { "id": "HP-NORTH->J2", "from": "HP-NORTH", "to": "J2", "seconds": 90, "zone": "J2" },
+    { "id": "J2->HP-NORTH", "from": "J2", "to": "HP-NORTH", "seconds": 90, "zone": "J2" },
+
+    { "id": "J2->J4", "from": "J2", "to": "J4", "seconds": 120, "zone": "J4", "channel": "TW-A", "maxWingspan": "D", "note": "TW-A 桥廊单向段，窄口" },
+    { "id": "J4->J2", "from": "J4", "to": "J2", "seconds": 120, "zone": "J2", "channel": "TW-A", "maxWingspan": "D", "note": "TW-A 桥廊反向段，与 J2->J4 物理共线，会车冲突" },
+
+    { "id": "S12->J4", "from": "S12", "to": "J4", "seconds": 90, "zone": "J4", "aircraftTypes": ["A320", "B737"] },
+    { "id": "N8->J4", "from": "N8", "to": "J4", "seconds": 70, "zone": "J4", "aircraftTypes": ["A320"] },
+    { "id": "J3->J4", "from": "J3", "to": "J4", "seconds": 110, "zone": "J4", "maxWingspan": "F", "note": "宽体可进入 J4 的唯一通道" },
+
+    { "id": "J2->D1", "from": "J2", "to": "D1", "seconds": 100, "maxWingspan": "F" },
+    { "id": "J4->D1", "from": "J4", "to": "D1", "seconds": 140, "maxWingspan": "F" },
+    { "id": "D1->H21", "from": "D1", "to": "H21", "seconds": 90, "aircraftTypes": ["A320", "A321", "B737", "B738", "B757", "B767", "A330", "B777"], "maxWingspan": "E" },
+    { "id": "J4->H21", "from": "J4", "to": "H21", "seconds": 120, "aircraftTypes": ["A320", "A321", "B737", "B738", "B757", "B767", "A330", "B777"], "maxWingspan": "E", "note": "机库入口限宽 E" },
+    { "id": "H21->J4", "from": "H21", "to": "J4", "seconds": 120, "zone": "J4", "aircraftTypes": ["A320", "A321", "B737", "B738", "B757", "B767", "A330", "B777"], "maxWingspan": "E", "note": "拖出机库" }
+  ]
+}
