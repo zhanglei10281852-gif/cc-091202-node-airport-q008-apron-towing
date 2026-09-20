@@ -10,12 +10,13 @@ test("领域样例可以解析", async () => {
   for (const file of files) {
     const data = JSON.parse(await readFile(new URL(`../fixtures/${file}`, import.meta.url), "utf8"));
     assert.equal(typeof data.scenario, "string");
-    assert.ok(Array.isArray(data.records));
+    // 旧形态：records；道路资料：edges；申请样例：requests
+    assert.ok(Array.isArray(data.records ?? data.edges ?? data.requests), `${file} 缺少可解析的记录数组`);
   }
 });
 
 test("健康接口返回可用状态", async (context) => {
-  const server = buildServer().listen(0, "127.0.0.1");
+  const server = (await buildServer()).listen(0, "127.0.0.1");
   context.after(() => server.close());
   await once(server, "listening");
   const address = server.address();

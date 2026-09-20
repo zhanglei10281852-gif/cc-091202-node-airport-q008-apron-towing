@@ -1,0 +1,95 @@
+{
+  "scenario": "夜间集中拖机申请样例：tow-88 与 tow-91 都要过 J4 窄口；tow-93 为 B777 绕飞样例；tow-94 携带即将过期的牵引车资质用于激活复验演示",
+  "timezone": "Asia/Shanghai",
+  "requests": [
+    {
+      "requestId": "tow-88",
+      "aircraft": { "type": "A320", "registration": "B-1601" },
+      "crew": {
+        "requireRoles": ["towing-supervisor", "wing-walker"],
+        "personnel": [
+          { "id": "M-101", "name": "张机长", "roles": ["towing-supervisor"],
+            "certifications": [{ "type": "apron-towing", "validFrom": "2025-01-01T00:00:00+08:00", "validTo": "2027-01-01T00:00:00+08:00" }] },
+          { "id": "M-102", "name": "李机务", "roles": ["wing-walker"],
+            "certifications": [{ "type": "wing-walk", "validFrom": "2025-06-01T00:00:00+08:00", "validTo": "2027-06-01T00:00:00+08:00" }] }
+        ],
+        "vehicles": [
+          { "id": "TR-12", "kind": "tow-tractor", "statusValidTo": "2027-03-01T00:00:00+08:00", "serviceable": true }
+        ]
+      },
+      "from": "S12",
+      "to": "H21",
+      "desiredStart": "2026-09-12T02:10:00+08:00",
+      "latestStart": "2026-09-12T02:40:00+08:00",
+      "segmentSeconds": { "J1->J4": 95 },
+      "intersectionSeparationSeconds": 60,
+      "activationTimeoutSeconds": 900,
+      "notes": "航后拖至 H21 检修，机务实测 J1->J4 需 95 秒"
+    },
+    {
+      "requestId": "tow-91",
+      "aircraft": { "type": "A320", "registration": "B-8802" },
+      "crew": {
+        "requireRoles": ["towing-supervisor", "wing-walker"],
+        "personnel": [
+          { "id": "M-205", "roles": ["towing-supervisor"],
+            "certifications": [{ "type": "apron-towing", "validFrom": "2024-01-01T00:00:00+08:00", "validTo": "2026-12-31T00:00:00+08:00" }] },
+          { "id": "M-206", "roles": ["wing-walker"],
+            "certifications": [{ "type": "wing-walk", "validFrom": "2025-01-01T00:00:00+08:00", "validTo": "2026-12-31T00:00:00+08:00" }] }
+        ],
+        "vehicles": [
+          { "id": "TR-07", "kind": "tow-tractor", "statusValidTo": "2026-11-01T00:00:00+08:00", "serviceable": true }
+        ]
+      },
+      "from": "N8",
+      "to": "H21",
+      "desiredStart": "2026-09-12T02:12:00+08:00",
+      "latestStart": "2026-09-12T02:45:00+08:00",
+      "intersectionSeparationSeconds": 60,
+      "activationTimeoutSeconds": 900,
+      "notes": "与 tow-88 在 J4 构成窄口相遇风险，期望被自动错峰"
+    },
+    {
+      "requestId": "tow-93",
+      "aircraft": { "type": "B777", "registration": "B-2026" },
+      "crew": {
+        "requireRoles": ["towing-supervisor", "wing-walker"],
+        "personnel": [
+          { "id": "M-101", "roles": ["towing-supervisor"],
+            "certifications": [{ "type": "apron-towing-widebody", "validFrom": "2025-01-01T00:00:00+08:00", "validTo": "2027-01-01T00:00:00+08:00" }] },
+          { "id": "M-102", "roles": ["wing-walker"],
+            "certifications": [{ "type": "wing-walk-widebody", "validFrom": "2025-01-01T00:00:00+08:00", "validTo": "2027-01-01T00:00:00+08:00" }] }
+        ],
+        "vehicles": [
+          { "id": "TR-31", "kind": "heavy-tow-tractor", "statusValidTo": "2027-01-01T00:00:00+08:00", "serviceable": true }
+        ]
+      },
+      "from": "S11",
+      "to": "H22",
+      "desiredStart": "2026-09-12T02:20:00+08:00",
+      "latestStart": "2026-09-12T03:00:00+08:00",
+      "intersectionSeparationSeconds": 60,
+      "notes": "B777 不可走 J1->J4 窄口，应自动选经 W1/J5 的绕行路线"
+    },
+    {
+      "requestId": "tow-94",
+      "aircraft": { "type": "A320", "registration": "B-6688" },
+      "crew": {
+        "requireRoles": ["towing-supervisor"],
+        "personnel": [
+          { "id": "M-309", "roles": ["towing-supervisor"],
+            "certifications": [{ "type": "apron-towing", "validFrom": "2024-01-01T00:00:00+08:00", "validTo": "2026-09-12T02:15:00+08:00" }] }
+        ],
+        "vehicles": [
+          { "id": "TR-02", "kind": "tow-tractor", "statusValidTo": "2026-09-12T02:15:00+08:00", "serviceable": true }
+        ]
+      },
+      "from": "S10",
+      "to": "H21",
+      "desiredStart": "2026-09-12T02:30:00+08:00",
+      "latestStart": "2026-09-12T03:00:00+08:00",
+      "intersectionSeparationSeconds": 60,
+      "notes": "资质/车辆状态在 02:15 失效：02:30 后激活必须被拒绝（可批准但不能激活）"
+    }
+  ]
+}

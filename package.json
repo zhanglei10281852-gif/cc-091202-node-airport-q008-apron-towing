@@ -1,1 +1,15 @@
-{"name":"apron-towing-context","version":"0.1.0","private":true,"type":"module","description":"机坪航空器拖行领域资料服务","scripts":{"start":"node src/server.js","test":"node --test"},"engines":{"node":">=20"}}
+{
+  "name": "apron-towing-permit-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "机坪航空器夜间集中拖行拖行许可引擎：有向路段/交叉区/机型限制上的时空寻路、预留与许可生命周期管理",
+  "scripts": {
+    "start": "node src/server.js",
+    "demo": "node src/demo.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

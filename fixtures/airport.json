@@ -1,0 +1,42 @@
+{
+  "id": "night-apron-demo",
+  "scenario": "夜间集中拖机：S 系列远机位至 H 检修机库，J4 为窄口交叉区，W1/W2 为可等待坪",
+  "timezone": "Asia/Shanghai",
+  "defaultIntersectionSeparationSeconds": 60,
+  "nodes": [
+    { "id": "S10", "kind": "stand", "capacity": 1 },
+    { "id": "S11", "kind": "stand", "capacity": 1 },
+    { "id": "S12", "kind": "stand", "capacity": 1 },
+    { "id": "N8", "kind": "stand", "capacity": 1 },
+    { "id": "W1", "kind": "bay", "capacity": 2, "notes": "J1 侧等待坪，可在此让行" },
+    { "id": "W2", "kind": "bay", "capacity": 2, "notes": "J2 侧等待坪" },
+    { "id": "H21", "kind": "stand", "capacity": 1, "notes": "检修机库 21" },
+    { "id": "H22", "kind": "stand", "capacity": 1, "notes": "检修机库 22" },
+    { "id": "J1", "kind": "junction" },
+    { "id": "J2", "kind": "junction" },
+    { "id": "J3", "kind": "junction" },
+    { "id": "J4", "kind": "junction", "notes": "窄口：N8/J1/J2 三路汇入" },
+    { "id": "J5", "kind": "junction" }
+  ],
+  "zones": [
+    { "id": "J4", "separationSeconds": 60 },
+    { "id": "J3", "separationSeconds": 45 }
+  ],
+  "edges": [
+    { "id": "S12->J1", "from": "S12", "to": "J1", "seconds": 60, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "S11->J1", "from": "S11", "to": "J1", "seconds": 45, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "S10->J2", "from": "S10", "to": "J2", "seconds": 60, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "N8->J4", "from": "N8", "to": "J4", "seconds": 70, "aircraftTypes": ["A320"], "widthClass": "narrow", "conflictZone": "J4" },
+    { "id": "J1->J4", "from": "J1", "to": "J4", "seconds": 90, "aircraftTypes": ["A320", "B737"], "widthClass": "narrow", "conflictZone": "J4", "notes": "窄口，B777 不可用" },
+    { "id": "J2->J4", "from": "J2", "to": "J4", "seconds": 70, "aircraftTypes": ["A320", "B737"], "widthClass": "narrow", "conflictZone": "J4" },
+    { "id": "J4->J3", "from": "J4", "to": "J3", "seconds": 50, "aircraftTypes": ["A320", "B737"], "conflictZone": "J4", "notes": "进入即占 J4 交叉区" },
+    { "id": "J1->W1", "from": "J1", "to": "W1", "seconds": 40, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "W1->J4", "from": "W1", "to": "J4", "seconds": 110, "aircraftTypes": ["A320", "B737"], "widthClass": "narrow", "conflictZone": "J4", "notes": "W1 等待坪改回 J4 窄口的联络道，路程较长且宽体机不可用" },
+    { "id": "W1->J5", "from": "W1", "to": "J5", "seconds": 60, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "J2->W2", "from": "J2", "to": "W2", "seconds": 50, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "W2->J5", "from": "W2", "to": "J5", "seconds": 65, "aircraftTypes": ["A320", "B737", "B777"] },
+    { "id": "J5->J3", "from": "J5", "to": "J3", "seconds": 70, "aircraftTypes": ["A320", "B737", "B777"], "conflictZone": "J3" },
+    { "id": "J3->H21", "from": "J3", "to": "H21", "seconds": 50, "aircraftTypes": ["A320", "B737", "B777"], "conflictZone": "J3" },
+    { "id": "J3->H22", "from": "J3", "to": "H22", "seconds": 55, "aircraftTypes": ["A320", "B737", "B777"], "conflictZone": "J3" }
+  ]
+}
